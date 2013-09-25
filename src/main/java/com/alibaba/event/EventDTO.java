@@ -21,6 +21,6 @@ import java.io.Serializable;
  */
 public class EventDTO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    
+    private static final long serialVersionUID = -8269912196060649947L;
+
 }

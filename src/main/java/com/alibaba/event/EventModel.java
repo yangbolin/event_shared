@@ -27,6 +27,8 @@ public class EventModel implements Serializable {
     /** 事件的回调 **/
     protected IEventCallBack  eventCallBack;
 
+    public EventModel() {
+    }
     public EventModel(String eventName, IEventCallBack eventCallBack){
         this.eventName = eventName;
         this.eventCallBack = eventCallBack;

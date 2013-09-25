@@ -27,7 +27,7 @@ public interface IEventListener {
      * @param eventCallBack 事件的回调
      * @throws EventException 事件的异常
      */
-    public void addEvent(String eventName, IEventCallBack eventCallBack) throws EventException;
+    public boolean addEvent(String eventName, IEventCallBack eventCallBack) throws EventException;
 
     /**
      * 删除监听者监听的一个事件
@@ -35,5 +35,5 @@ public interface IEventListener {
      * @param eventName 事件名称
      * @throws EventException 事件的异常
      */
-    public void delEvent(String eventName) throws EventException;
+    public boolean delEvent(String eventName) throws EventException;
 }

@@ -7,6 +7,7 @@
  */
 package com.alibaba.event;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -25,15 +26,18 @@ public abstract class AbstractEventCenter {
 
     /** 触发事件的策略,目前有并行和串行两种 **/
     private static Map<TriggerEventStrategyEnum, ITriggerStrategy> strategyMap          = new ConcurrentHashMap<TriggerEventStrategyEnum, ITriggerStrategy>();
+    /** 缺省线程池的大小 **/
+    private static final int                                       defaultPoolSize      = 20;
     /** 需要使用的触发策略，缺省使用串行 **/
     protected String                                               eventTriggerStrategy = "SERIAL";
     /** 监听者列表 **/
-    protected List<IEventListener>                                 listenerList;
+    protected List<AbstractEventListener>                          listenerList         = new ArrayList<AbstractEventListener>();
     /** 并发处理事件时的线程池大小 **/
     protected int                                                  poolSize;
+
     static {
         strategyMap.put(TriggerEventStrategyEnum.SERIAL, new SerialTriggerStrategyImpl());
-        strategyMap.put(TriggerEventStrategyEnum.CONCURRENT, new ConcurrentTriggerStrategyImpl());
+        strategyMap.put(TriggerEventStrategyEnum.CONCURRENT, new ConcurrentTriggerStrategyImpl(defaultPoolSize));
     }
 
     /**
@@ -51,16 +55,26 @@ public abstract class AbstractEventCenter {
         triggerStrategy.execute(listenerList, eventContext);
     }
 
+    /**
+     * 增加一个事件监听者
+     * 
+     * @param listener
+     * @return
+     */
+    public boolean addListener(AbstractEventListener listener) {
+        if (listenerList == null) {
+            return false;
+        }
+        listenerList.add(listener);
+        return true;
+    }
+
     public String getEventTriggerStrategy() {
         return eventTriggerStrategy;
     }
 
     public void setEventTriggerStrategy(String eventTriggerStrategy) {
         this.eventTriggerStrategy = eventTriggerStrategy;
-    }
-
-    public void setListenerList(List<IEventListener> listenerList) {
-        this.listenerList = listenerList;
     }
 
     public int getPoolSize() {

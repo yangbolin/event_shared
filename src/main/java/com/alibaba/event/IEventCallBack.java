@@ -19,5 +19,5 @@ public interface IEventCallBack {
      * 
      * @param eventDTO
      */
-    public void execute(EventDTO eventDTO);
+    public void execute(final EventDTO eventDTO);
 }

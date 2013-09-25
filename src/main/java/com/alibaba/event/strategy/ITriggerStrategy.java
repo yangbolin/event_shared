@@ -9,8 +9,8 @@ package com.alibaba.event.strategy;
 
 import java.util.List;
 
+import com.alibaba.event.AbstractEventListener;
 import com.alibaba.event.EventContext;
-import com.alibaba.event.IEventListener;
 import com.alibaba.event.exception.EventException;
 
 /**
@@ -27,5 +27,5 @@ public interface ITriggerStrategy {
      * @param eventContext
      * @throws EventException
      */
-    public void execute(List<IEventListener> listenerList, EventContext eventContext);
+    public void execute(List<AbstractEventListener> listenerList, EventContext eventContext);
 }
